@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Hub: Your Digital Command Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Roboto Mono', monospace;
+        }
+        h1, h2 {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .text-neon-green {
+            color: #39FF14;
+        }
+        .bg-neon-green-500 {
+            background-color: #39FF14;
+        }
+        .border-neon-green {
+            border-color: #39FF14;
+        }
+        .text-neon-cyan {
+            color: #00FFFF;
+        }
+        .bg-neon-cyan-500 {
+            background-color: #00FFFF;
+        }
+        .border-neon-cyan {
+            border-color: #00FFFF;
+        }
+        .text-strike {
+            text-decoration: line-through;
+            color: #555;
+            transition: color 0.3s;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .progress-bar-fill {
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 min-h-screen p-8 flex flex-col items-center justify-center">
+
+    <h1 class="text-4xl text-neon-cyan mb-8">Daily-Hub🚀</h1>
+
+    <div class="container max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-8">
+        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 shadow-lg flex flex-col">
+            <h2 class="text-2xl text-neon-green mb-4 border-b pb-2 border-neon-green">Daily Habits</h2>
+            
+            <div class="w-full bg-gray-700 rounded-full h-4 mb-4">
+                <div id="habit-progress-bar" class="progress-bar-fill h-4 rounded-full bg-neon-green-500" style="width: 0%;"></div>
+            </div>
+            <p id="progress-text" class="text-center text-sm mb-4">0% complete</p>
+
+            <ul id="habit-list" class="space-y-3 flex-grow">
+                <li class="flex items-center space-x-2 text-lg">
+                    <input type="checkbox" data-habit-id="1" class="habit-checkbox h-4 w-4 text-neon-green-500 bg-gray-900 border-gray-600 rounded focus:ring-neon-green-500">
+                    <span>Drink 8 glasses of water</span>
+                </li>
+                <li class="flex items-center space-x-2 text-lg">
+                    <input type="checkbox" data-habit-id="2" class="habit-checkbox h-4 w-4 text-neon-green-500 bg-gray-900 border-gray-600 rounded focus:ring-neon-green-500">
+                    <span>Read for 30 minutes</span>
+                </li>
+                <li class="flex items-center space-x-2 text-lg">
+                    <input type="checkbox" data-habit-id="3" class="habit-checkbox h-4 w-4 text-neon-green-500 bg-gray-900 border-gray-600 rounded focus:ring-neon-green-500">
+                    <span>Exercise for 20 minutes</span>
+                </li>
+                <li class="flex items-center space-x-2 text-lg">
+                    <input type="checkbox" data-habit-id="4" class="habit-checkbox h-4 w-4 text-neon-green-500 bg-gray-900 border-gray-600 rounded focus:ring-neon-green-500">
+                    <span>Meditate for 10 minutes</span>
+                </li>
+                <li class="flex items-center space-x-2 text-lg">
+                    <input type="checkbox" data-habit-id="5" class="habit-checkbox h-4 w-4 text-neon-green-500 bg-gray-900 border-gray-600 rounded focus:ring-neon-green-500">
+                    <span>Journal an entry</span>
+                </li>
+                <li class="flex items-center space-x-2 text-lg">
+                    <input type="checkbox" data-habit-id="6" class="habit-checkbox h-4 w-4 text-neon-green-500 bg-gray-900 border-gray-600 rounded focus:ring-neon-green-500">
+                    <span>Plan the next day</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 shadow-lg flex flex-col h-full">
+            <h2 class="text-2xl text-neon-green mb-4 border-b pb-2 border-neon-green">My Tasks</h2>
+            
+            <div class="mb-4">
+                <div class="flex space-x-2 mb-2">
+                    <input type="text" id="task-input" class="flex-grow p-2 rounded bg-gray-700 text-gray-200 border border-gray-600 focus:outline-none focus:border-neon-cyan" placeholder="Enter a new task...">
+                    <button id="add-task-btn" class="px-4 py-2 bg-neon-green-500 text-gray-900 font-bold rounded hover:opacity-80 transition-opacity">Add</button>
+                </div>
+                <div class="flex justify-between items-center">
+                    <button id="speech-btn" class="w-full px-4 py-2 bg-gray-700 text-neon-cyan font-bold rounded border border-neon-cyan hover:bg-neon-cyan-500 hover:text-gray-900 transition-colors">
+                        🎙️ Speak to Add
+                    </button>
+                </div>
+                <p id="status-message" class="mt-2 text-center text-sm italic text-gray-400"></p>
+            </div>
+            
+            <ul id="task-list" class="space-y-3 overflow-y-auto flex-grow pr-2 scrollbar-hide">
+                </ul>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 shadow-lg flex flex-col">
+            <h2 class="text-2xl text-neon-green mb-4 border-b pb-2 border-neon-green">Daily Journal 🤖</h2>
+            <textarea id="journal-entry" class="flex-grow p-4 rounded-lg bg-gray-700 text-gray-200 border border-gray-600 focus:outline-none focus:border-neon-cyan mb-4 resize-none" rows="10" placeholder="Write down your thoughts, ideas, and notes here..."></textarea>
+            
+            <div class="flex justify-between items-center mb-4">
+                <span id="word-count" class="text-sm text-gray-400">0 words</span>
+                <button id="save-journal-btn" class="px-4 py-2 bg-neon-green-500 text-gray-900 font-bold rounded hover:opacity-80 transition-opacity">
+                    Save Journal
+                </button>
+            </div>
+
+            <h2 class="text-2xl text-neon-green mb-4 mt-8 border-b pb-2 border-neon-green">Daily Analysis 📊</h2>
+            <textarea id="daily-analysis-entry" class="flex-grow p-4 rounded-lg bg-gray-700 text-gray-200 border border-gray-600 focus:outline-none focus:border-neon-cyan mb-4 resize-none" rows="5" placeholder="Reflect on your progress and analyze your day..."></textarea>
+            <button id="save-analysis-btn" class="px-4 py-2 bg-neon-green-500 text-gray-900 font-bold rounded hover:opacity-80 transition-opacity">
+                Save Analysis
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- Core Application Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTasks();
+            loadHabits();
+            loadJournal();
+            loadDailyAnalysis();
+        });
+
+        // --- Daily Habits Logic ---
+        const habitCheckboxes = document.querySelectorAll('.habit-checkbox');
+        const progressBar = document.getElementById('habit-progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const totalHabits = habitCheckboxes.length;
+
+        habitCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                saveHabits();
+                updateProgressBar();
+            });
+        });
+
+        function updateProgressBar() {
+            const completedHabits = document.querySelectorAll('.habit-checkbox:checked').length;
+            const progressPercentage = (completedHabits / totalHabits) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${Math.round(progressPercentage)}% complete`;
+        }
+
+        function saveHabits() {
+            const habitStatus = {};
+            habitCheckboxes.forEach(checkbox => {
+                habitStatus[checkbox.dataset.habitId] = checkbox.checked;
+            });
+            localStorage.setItem('habitStatus', JSON.stringify(habitStatus));
+        }
+
+        function loadHabits() {
+            const savedHabits = JSON.parse(localStorage.getItem('habitStatus') || '{}');
+            habitCheckboxes.forEach(checkbox => {
+                if (savedHabits[checkbox.dataset.habitId]) {
+                    checkbox.checked = true;
+                }
+            });
+            updateProgressBar();
+        }
+
+        // --- My Tasks Logic ---
+        const taskInput = document.getElementById('task-input');
+        const addTaskBtn = document.getElementById('add-task-btn');
+        const speechBtn = document.getElementById('speech-btn');
+        const taskList = document.getElementById('task-list');
+        const statusMessage = document.getElementById('status-message');
+
+        let isListening = false;
+        let recognition;
+
+        addTaskBtn.addEventListener('click', () => {
+            const taskText = taskInput.value.trim();
+            if (taskText) {
+                addTask(taskText);
+                taskInput.value = '';
+            }
+        });
+
+        taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTaskBtn.click();
+            }
+        });
+
+        function addTask(text, isCompleted = false) {
+            const li = document.createElement('li');
+            li.className = `flex items-center justify-between p-3 rounded-lg bg-gray-700 border border-gray-600 transition-colors`;
+            if (isCompleted) {
+                li.classList.add('text-strike');
+            }
+            
+            li.innerHTML = `
+                <div class="flex items-center space-x-3 flex-grow">
+                    <input type="checkbox" ${isCompleted ? 'checked' : ''} class="task-checkbox h-4 w-4 text-neon-green-500 bg-gray-900 border-gray-600 rounded focus:ring-neon-green-500">
+                    <span class="task-text">${text}</span>
+                </div>
+                <button class="delete-btn text-gray-400 hover:text-red-500 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm6 0a1 1 0 112 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            `;
+            
+            li.querySelector('.task-checkbox').addEventListener('change', (e) => {
+                li.classList.toggle('text-strike', e.target.checked);
+                saveTasks();
+            });
+
+            li.querySelector('.delete-btn').addEventListener('click', () => {
+                taskList.removeChild(li);
+                saveTasks();
+            });
+            
+            taskList.appendChild(li);
+            saveTasks();
+        }
+
+        function saveTasks() {
+            const tasks = [];
+            taskList.querySelectorAll('li').forEach(item => {
+                tasks.push({
+                    text: item.querySelector('.task-text').textContent,
+                    completed: item.querySelector('.task-checkbox').checked
+                });
+            });
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        function loadTasks() {
+            const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+            tasks.forEach(task => {
+                addTask(task.text, task.completed);
+            });
+        }
+
+        // Speech Recognition setup
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = () => {
+                isListening = true;
+                speechBtn.textContent = 'Listening...';
+                speechBtn.classList.remove('bg-gray-700', 'text-neon-cyan', 'border-neon-cyan');
+                speechBtn.classList.add('bg-red-600', 'text-white', 'border-red-600');
+                statusMessage.textContent = 'Speak now to add a task.';
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                addTask(transcript);
+                statusMessage.textContent = `Task added: "${transcript}"`;
+            };
+
+            recognition.onerror = (event) => {
+                console.error(event.error);
+                statusMessage.textContent = 'Speech recognition error. Please try again.';
+            };
+
+            recognition.onend = () => {
+                isListening = false;
+                speechBtn.textContent = '🎙️ Speak to Add';
+                speechBtn.classList.add('bg-gray-700', 'text-neon-cyan', 'border-neon-cyan');
+                speechBtn.classList.remove('bg-red-600', 'text-white', 'border-red-600');
+                if (statusMessage.textContent.startsWith('Speak now')) {
+                    statusMessage.textContent = 'Speech recognition stopped.';
+                }
+            };
+        } else {
+            speechBtn.style.display = 'none';
+            statusMessage.textContent = 'Your browser does not support Web Speech API.';
+        }
+
+        speechBtn.addEventListener('click', () => {
+            if (isListening) {
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        });
+
+        // --- Daily Journal Logic ---
+        const journalEntry = document.getElementById('journal-entry');
+        const wordCountDisplay = document.getElementById('word-count');
+        const saveJournalBtn = document.getElementById('save-journal-btn');
+
+        journalEntry.addEventListener('input', updateWordCount);
+        saveJournalBtn.addEventListener('click', saveJournal);
+
+        function updateWordCount() {
+            const text = journalEntry.value.trim();
+            const words = text.split(/\s+/).filter(word => word.length > 0);
+            wordCountDisplay.textContent = `${words.length} words`;
+        }
+
+        function saveJournal() {
+            localStorage.setItem('dailyJournal', journalEntry.value);
+            alert('Journal entry saved!');
+        }
+
+        function loadJournal() {
+            const savedEntry = localStorage.getItem('dailyJournal');
+            if (savedEntry) {
+                journalEntry.value = savedEntry;
+                updateWordCount();
+            }
+        }
+
+        // --- Daily Analysis Logic ---
+        const dailyAnalysisEntry = document.getElementById('daily-analysis-entry');
+        const saveAnalysisBtn = document.getElementById('save-analysis-btn');
+
+        saveAnalysisBtn.addEventListener('click', saveDailyAnalysis);
+
+        function saveDailyAnalysis() {
+            localStorage.setItem('dailyAnalysis', dailyAnalysisEntry.value);
+            alert('Daily analysis saved!');
+        }
+
+        function loadDailyAnalysis() {
+            const savedAnalysis = localStorage.getItem('dailyAnalysis');
+            if (savedAnalysis) {
+                dailyAnalysisEntry.value = savedAnalysis;
+            }
+        }
+    </script>
+</body>
+</html>
